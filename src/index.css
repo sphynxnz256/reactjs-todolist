@@ -6,12 +6,20 @@
   color: #202124;
 }
 
-h1,
-h2,
-h3,
-input,
-button {
-  font-family: 'Press Start 2P', system-ui;
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  background: white;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 14px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: bold;
 }
 
 #root {
@@ -105,6 +113,9 @@ p {
 
 
 @media (min-width: 640px) {
+  .title {
+    font-size: 1.5em;
+  }
 
   header button,
   header input {

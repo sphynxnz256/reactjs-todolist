@@ -46,6 +46,10 @@ function App() {
 
   return (
     <>
+      <div className="title">
+        <h1>Todo List</h1>
+      </div>
+      
       <TodoInput todoValue={todoValue} setTodoValue={setTodoValue}
         handleAddTodos = {handleAddTodos}/>
       <TodoList handleEditTodo={handleEditTodo}
