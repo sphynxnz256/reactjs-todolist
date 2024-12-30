@@ -5,18 +5,18 @@ export default function TodoCard(props) {
     const {children, handleDeleteTodo, index, handleEditTodo, moveTodoUp, moveTodoDown} = props;
 
     return(
-    <li className='todoItem'>
+    <li className='todoItem' >
         {children}
         <div className='actionsContainer'>
             <button onClick={() => {
                 moveTodoUp(index);
             }}>
-                <i class="fa-solid fa-arrow-up"></i>    
+                <i className="fa-solid fa-arrow-up"></i>    
             </button>
             <button onClick={() => {
                 moveTodoDown(index);
             }}>
-                <i class="fa-solid fa-arrow-down"></i>
+                <i className="fa-solid fa-arrow-down"></i>
             </button>
             <button onClick={() => {
                 handleEditTodo(index);

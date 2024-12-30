@@ -3,14 +3,14 @@ import TodoCard from './TodoCard'
 
 export default function TodoList(props) {
 
-    const {todos} = props;
+    const {todos, isDarkMode} = props;
     
     return (
         <ul className='main'>
             {todos.map((todo, todoIndex) => {
                 return (
                     <TodoCard {...props} key={todoIndex} index={todoIndex}>
-                        <p>{todo}</p>
+                        <p style={{color: isDarkMode ? "white" : "hsl(225, 6%, 13%)"}}>{todo}</p>
                     </TodoCard>
                 );
             })}

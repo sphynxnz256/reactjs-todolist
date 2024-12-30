@@ -7,6 +7,7 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [todoValue, setTodoValue] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   function persistData(newList) {
     localStorage.setItem('todos', JSON.stringify({todos: newList}));
@@ -19,7 +20,7 @@ function App() {
   }
 
   function handleDeleteTodo(index){
-    const newTodoList = todos.filter((todo, todoIndex) => {
+    const newTodoList = todos.filter((_, todoIndex) => {
       return todoIndex !== index;
     });
     persistData(newTodoList);
@@ -50,7 +51,10 @@ function App() {
       persistData(newTodoList);
       setTodos(newTodoList);
     }
+  }
 
+  function handleLightDarkToggle() {
+    setIsDarkMode(!isDarkMode);
   }
 
   useEffect(() => {
@@ -65,15 +69,29 @@ function App() {
     setTodos(localToDos);
   }, []);
 
+  useEffect(() => {
+    const rootDiv = document.getElementById('root');
+    if(rootDiv) {
+      rootDiv.style.backgroundColor = isDarkMode ? "hsl(214, 100%, 05%)" : "hsl(214, 100%, 95%)";
+    }
+  });
+
   return (
     <>
       <div className="title">
-        <h1>Todo List</h1>
+        <h1 style={{color: isDarkMode ? "white" : "hsl(225, 6%, 13%)",
+          backgroundColor: isDarkMode ? "hsl(214, 100%, 25%)" : "white"
+        }}> {/* trying to work out why the title isnt rendering correcly anymore */}
+          Todo List
+        </h1>
+        <button className="day-night-toggle" onClick={handleLightDarkToggle}>          
+          <i className="day fa-regular fa-lightbulb" style={{display: isDarkMode ? "none" : "block"}}></i>
+          <i className="night fa-solid fa-lightbulb" style={{display: isDarkMode ? "block" : "none"}}></i>
+        </button>        
       </div>
-      
       <TodoInput todoValue={todoValue} setTodoValue={setTodoValue}
-        handleAddTodos = {handleAddTodos}/>
-      <TodoList handleEditTodo={handleEditTodo}
+        handleAddTodos = {handleAddTodos} isDarkMode={isDarkMode}/>
+      <TodoList handleEditTodo={handleEditTodo} isDarkMode={isDarkMode}
         handleDeleteTodo={handleDeleteTodo} todos={todos}
         moveTodoUp={moveTodoUp} moveTodoDown={moveTodoDown}/>
     </>
