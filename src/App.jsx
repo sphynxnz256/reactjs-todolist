@@ -7,7 +7,19 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [todoValue, setTodoValue] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    //check if we have localStorage and if it doesnt return false
+    if(!localStorage) { 
+      return false;
+    }
+    let localMode = localStorage.getItem("isDarkMode");
+    //check localMode exsits and if it doesnt return false
+    if (!localMode) { 
+      return false;
+    }
+    //return the value stored in localStorage
+    return JSON.parse(localMode).isDarkMode;
+  });
 
   //function to store data so the todo list isnt wiped if the website is reloaded.
   function persistData(newList) {
@@ -61,10 +73,10 @@ function App() {
 
   //function to toggle the dark/light mode theme of the website
   function handleLightDarkToggle() {
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode(!isDarkMode);    
   }
 
-  //useEffect for storing data(todos) to localStorage
+  //useEffect for loading data(todos) from localStorage
   useEffect(() => {
     if(!localStorage) {
       return;
@@ -77,22 +89,45 @@ function App() {
     setTodos(localToDos);
   }, []);
 
+  //useEffect for loading dark/light mode from localStorage
+  /*useEffect(() => {
+    if(!localStorage) {
+      return;
+    }
+    let localMode = localStorage.getItem("isDarkMode");
+    if (!localMode) {
+      return;
+    }
+    console.log(`localMode: ${localMode}`)
+    localMode = JSON.parse(localMode).isDarkMode;
+    setIsDarkMode(localMode);
+    console.log(`isDarkMode: ${isDarkMode}` );
+  }, []);*/
+
+  //useEffect to save isDarkMode state to localStorage when ever its toggled
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', JSON.stringify({isDarkMode: isDarkMode}));
+    console.log(`saving isDarkmode ${localStorage.getItem("isDarkMode")}`);
+  }, [isDarkMode]);
+
+
   //useEffect to toggle background color based on if dark mode is set or not
   useEffect(() => {
     const rootDiv = document.getElementById('root');
     if(rootDiv) {
       rootDiv.style.backgroundColor = isDarkMode ? "hsl(214, 100%, 05%)" : "hsl(214, 100%, 95%)";
     }
-  });
+  }), [isDarkMode];
 
-  //return the website
+  //return the webpage
   return (
     <>
       <div className="title" style={{backgroundColor: isDarkMode ? "hsl(214, 100.00%, 25.30%)" : "white"}}>
         <h1 style={{color: isDarkMode ? "white" : "hsl(225, 6%, 13%)"}}>
           Todo List
         </h1>
-        <button className="day-night-toggle" onClick={handleLightDarkToggle} style={{backgroundColor: isDarkMode ? "hsl(214, 100.00%, 25.30%)" : "white"}}>          
+        <button className="day-night-toggle" onClick={handleLightDarkToggle} 
+          style={{backgroundColor: isDarkMode ? "hsl(214, 100.00%, 25.30%)" : "white"}}>          
           <i className="day fa-regular fa-lightbulb" style={{color: isDarkMode ? "white" : "black"}}></i>
         </button>        
       </div>
