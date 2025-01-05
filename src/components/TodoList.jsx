@@ -1,6 +1,7 @@
 import React from 'react'
 import TodoCard from './TodoCard'
 
+//builds the todo list
 export default function TodoList(props) {
 
     const {todos, isDarkMode} = props;
