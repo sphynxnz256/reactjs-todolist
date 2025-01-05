@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 //builds the input for the todo list
 export default function TodoInput(props){
 

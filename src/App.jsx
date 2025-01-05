@@ -89,21 +89,6 @@ function App() {
     setTodos(localToDos);
   }, []);
 
-  //useEffect for loading dark/light mode from localStorage
-  /*useEffect(() => {
-    if(!localStorage) {
-      return;
-    }
-    let localMode = localStorage.getItem("isDarkMode");
-    if (!localMode) {
-      return;
-    }
-    console.log(`localMode: ${localMode}`)
-    localMode = JSON.parse(localMode).isDarkMode;
-    setIsDarkMode(localMode);
-    console.log(`isDarkMode: ${isDarkMode}` );
-  }, []);*/
-
   //useEffect to save isDarkMode state to localStorage when ever its toggled
   useEffect(() => {
     localStorage.setItem('isDarkMode', JSON.stringify({isDarkMode: isDarkMode}));

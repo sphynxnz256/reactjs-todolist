@@ -1,5 +1,3 @@
-import React from 'react'
-
 //builds a card for an individual todo task
 export default function TodoCard(props) {
 
